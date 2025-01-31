@@ -26,12 +26,11 @@ export AWS_ACCESS_KEY_ID="your-access-key"
 export AWS_SECRET_ACCESS_KEY="your-secret-key"
 
 
+#================= Step 1 Create Docker image For sample web application.======================
 
-**================= Step 1 Create Docker image For sample web application.=================**<br>
+###### Create Docker Image #####
 
-###### Create Docker Image 
-
-# 1. Clone the repo to you local
+# 1. Clone the repo to you local system
 git clone https://github.com/wasimalii/atc.git<br>
 cd atc/my-webapp
 
@@ -41,84 +40,66 @@ Or docker build -t <image-tag> . # To simply build image irespective of platform
 ![Example Image](images/img1.png)
 
 # 3. To run sample web application locally
- docker run -itd --name=myapp  -p 8080:80 myapp
+ docker run -itd --name=myapp -p 8080:80 myapp
  curl http://localhost:8080/  # you will see the nginx page 
 ![Example Image](images/img2.png)
 
-
-# 1. Pull the Docker Image
-docker pull docker007786/particle41:myapp
-
-# 2. Run the Docker Container
-docker run -itd --name=voo -p 5000:5000 docker007786/particle41:myapp
-
-# 3. Access the App
-curl http://localhost:5000<br>
-Note: check ports 
-![Example Image](images/docker.png)
-
-## Note: i have alredy created docker image from dockerfile present in this repo you can simply pull image from my public repo and run it<br>
-
+############# NOTE: I have alredy created docker image from Dockerfile present in this repo you can simply pull image from my public repo and run it. #########
 docker pull docker007786/atc:myapp<br>
-docker run -itd --name=myapp  -p 8080:80 docker007786/atc:myapp<br>
+docker run -itd --name=myapp -p 8080:80 docker007786/atc:myapp<br>
 curl http://localhost:8080/
 ![Example Image](images/img3.png)
  
 
 
+## Step 2: Create an EKS Cluster with a Node Pool in AWS Using Terraform  
 
+**Note:** Before running the Terraform scripts, you need to export your AWS Access Key and Secret Access Key.  
 
-**================= Step 2 Create EKS cluster with node-pool attached in AWS using terraform.=================**<br>
+### 1. Navigate to the Terraform Directory, Initialize, and Validate the Terraform Files  
 
-### Prerequisites<br>
-Before running the Terraform scripts, you need to set up your AWS Access and Secret Access Keys. Follow the steps below:<br>
-
-Go to the AWS Management Console.<br>
-Click on your profile name (located at the top-right corner). ---->  Select "My Security Credentials." ----> Navigate to the Access Keys section. ---> Click on "Create New Access Key" to generate a set of keys.<br>
-
-Use these keys to authenticate Terraform with AWS by setting them in your environment variables or a credentials file<br>
-
-# 1. Navigate to the Terraform directory:
-cd /atc/terraform<br>
+```sh
+cd /atc/terraform
 terraform init
-terraform validate<br>
-terraform plan<br>
-terraform apply
+terraform validate
+
+
+**==================== Step 2 Create EKS cluster with node-pool attached in AWS using terraform.===================**
+
+Note: Before running the Terraform scripts, you need to export your AWS Access and Secret Access Keys.
+
+# 1. Navigate to the Terraform directory initialize and validate the terraform file:
+cd /atc/terraform
+terraform init
+terraform validate
 
 
 
 # 2. Terraform commands to plan and apply the configuration:
-terraform plan<br>
+terraform plan
 terraform apply
+![Example Image](images/img5.png)
+
 
 # 3.Expected Output: 
-
-Accessing the Application Load Balancer (ALB) DNS will show an Nginx default page.
-
-The following resources will be created:<br>
-A VPC with 2 public subnets and 2 private subnets.<br>
-An ECS cluster deployed in the private subnets of the VPC.<br>
-An ECS Task running nginx container.<br>
-A Load Balancer (ALB) in the public subnets to route traffic to the private subnets where tasks are running.
-
-![Example Image](images/terraform1.png)
-![Example Image](images/terraform2.png)
+An EKS cluster along with node-pool attached is ctreated in us-east-2 region aws
+![Example Image](images/img8.png)
 
 
-**================= Step 3 Deploy ample web application on eks cluster.=================**<br>
+**================= Step 3 Deploy Sample web application on eks cluster.=================**<br>
 
-# Fetch aws 
-atc/kube-deployment-file<br>
+# Fetch aws credentials
+atc/kube-deployment-file
 aws eks --region us-east-2 update-kubeconfig --name my-eks-cluster
 
 
-#  
+#  check aws cluster in kubeconfig
 kubectl config get-clusters | grep aws
 
-#
+# create deployment and service 
 kubectl apply -f myapp-deployment.yml myapp-service.yml
 
-# 
+# access the servcie using port forward 
  kubectl port-forward service/myapp-service 8080:80
 
 # 
