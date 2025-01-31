@@ -89,7 +89,7 @@ kubectl apply -f myapp-deployment.yml myapp-service.yml
 
 # access the servcie using port forward 
 kubectl port-forward service/myapp-service 8080:80
-![EKS Cluster](atc/images/img8.png)
+![EKS Cluster](images/img8.png)
 
 
 
