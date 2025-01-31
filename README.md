@@ -89,7 +89,7 @@ kubectl apply -f myapp-deployment.yml myapp-service.yml
 
 # access the servcie using port forward 
 kubectl port-forward service/myapp-service 8080:80
-![Terraform Plan](images/img6.png)
+![Terraform Plan](atc/images/img6.png)
 
 
 # 
