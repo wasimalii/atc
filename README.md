@@ -21,7 +21,7 @@ Follow these steps to create AWS Access and Secret Access Keys:
 
 Use these keys to authenticate Terraform with AWS by setting them in your environment variables:  
 
-```sh
+
 export AWS_ACCESS_KEY_ID="your-access-key"
 export AWS_SECRET_ACCESS_KEY="your-secret-key"
 
