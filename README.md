@@ -48,31 +48,19 @@ Or docker build -t <image-tag> . # To simply build image irespective of platform
 docker pull docker007786/atc:myapp<br>
 docker run -itd --name=myapp -p 8080:80 docker007786/atc:myapp<br>
 curl http://localhost:8080/
-![Example Image](images/img3.png)
+![Example Image](images/img7.png)
  
 
 
-## Step 2: Create an EKS Cluster with a Node Pool in AWS Using Terraform  
+
+**==================== Step 2 Create an EKS Cluster with a Node Pool in AWS Using Terraform  .===================**
 
 **Note:** Before running the Terraform scripts, you need to export your AWS Access Key and Secret Access Key.  
 
 ### 1. Navigate to the Terraform Directory, Initialize, and Validate the Terraform Files  
-
-```sh
 cd /atc/terraform
 terraform init
 terraform validate
-
-
-**==================== Step 2 Create EKS cluster with node-pool attached in AWS using terraform.===================**
-
-Note: Before running the Terraform scripts, you need to export your AWS Access and Secret Access Keys.
-
-# 1. Navigate to the Terraform directory initialize and validate the terraform file:
-cd /atc/terraform
-terraform init
-terraform validate
-
 
 
 # 2. Terraform commands to plan and apply the configuration:
@@ -100,7 +88,9 @@ kubectl config get-clusters | grep aws
 kubectl apply -f myapp-deployment.yml myapp-service.yml
 
 # access the servcie using port forward 
- kubectl port-forward service/myapp-service 8080:80
+kubectl port-forward service/myapp-service 8080:80
+![Example Image](images/img6.png)
+
 
 # 
 
