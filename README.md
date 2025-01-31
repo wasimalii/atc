@@ -40,20 +40,24 @@ Or docker build -t <image-tag> . # To simply build image irespective of platform
 ```
 ![Example Image](images/img1.png)
 
+```sh
 # 3. To run sample web application locally
  docker run -itd --name=myapp -p 8080:80 myapp
- curl http://localhost:8080/  # you will see the nginx page 
+ curl http://localhost:8080/  # you will see the nginx page
+```
 ![Example Image](images/img2.png)
 
+```sh
 ############# NOTE: I have alredy created docker image from Dockerfile present in this repo you can simply pull image from my public repo and run it. #########
 docker pull docker007786/atc:myapp<br>
 docker run -itd --name=myapp -p 8080:80 docker007786/atc:myapp<br>
 curl http://localhost:8080/
+```
 ![Example Image](images/img7.png)
  
 
 
-
+```sh
 **==================== Step 2 Create an EKS Cluster with a Node Pool in AWS Using Terraform  .===================**
 
 **Note:** Before running the Terraform scripts, you need to export your AWS Access Key and Secret Access Key.  
@@ -67,14 +71,16 @@ terraform validate
 # 2. Terraform commands to plan and apply the configuration:
 terraform plan
 terraform apply
+```
 ![Example Image](images/img5.png)
 
-
+```sh
 # 3.Expected Output: 
 An EKS cluster along with node-pool attached is ctreated in us-east-2 region aws
+```
 ![Example Image](images/img8.png)
 
-
+```sh
 **================= Step 3 Deploy Sample web application on eks cluster.=================**<br>
 
 # Fetch aws credentials
@@ -90,6 +96,7 @@ kubectl apply -f myapp-deployment.yml myapp-service.yml
 
 # access the servcie using port forward 
 kubectl port-forward service/myapp-service 8080:80
+```
 ![EKS Cluster](https://raw.githubusercontent.com/wasimalii/atc/images/img8.png)
 ![alt text](https://github.com/wasimalii/atc/blob/main/images/img8.png)
 
