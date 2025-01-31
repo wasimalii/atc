@@ -21,7 +21,7 @@ Follow these steps to create AWS Access and Secret Access Keys:
 
 Use these keys to authenticate Terraform with AWS by setting them in your environment variables:  
 
-
+```sh
 export AWS_ACCESS_KEY_ID="your-access-key"
 export AWS_SECRET_ACCESS_KEY="your-secret-key"
 
@@ -37,6 +37,7 @@ cd atc/my-webapp
 # 2. Run Docker build to build the sample web application
 docker buildx build --platform linux/amd64,linux/arm64 -t <imag-tag> .    # Note: I am using macOS, so I include the platform flag to ensure that my image runs on both platforms.
 Or docker build -t <image-tag> . # To simply build image irespective of platform
+```
 ![Example Image](images/img1.png)
 
 # 3. To run sample web application locally
