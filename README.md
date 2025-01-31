@@ -24,6 +24,7 @@ Use these keys to authenticate Terraform with AWS by setting them in your enviro
 ```sh
 export AWS_ACCESS_KEY_ID="your-access-key"
 export AWS_SECRET_ACCESS_KEY="your-secret-key"
+```
 
 
 #================= Step 1 Create Docker image For sample web application.======================
@@ -31,70 +32,84 @@ export AWS_SECRET_ACCESS_KEY="your-secret-key"
 ###### Create Docker Image #####
 
 # 1. Clone the repo to you local system
-git clone https://github.com/wasimalii/atc.git<br>
+```sh
+git clone https://github.com/wasimalii/atc.git
 cd atc/my-webapp
+```
 
 # 2. Run Docker build to build the sample web application
+```sh
 docker buildx build --platform linux/amd64,linux/arm64 -t <imag-tag> .    # Note: I am using macOS, so I include the platform flag to ensure that my image runs on both platforms.
 Or docker build -t <image-tag> . # To simply build image irespective of platform
 ```
 ![Example Image](images/img1.png)
 
-```sh
+
 # 3. To run sample web application locally
- docker run -itd --name=myapp -p 8080:80 myapp
+```sh 
+docker run -itd --name=myapp -p 8080:80 myapp
  curl http://localhost:8080/  # you will see the nginx page
 ```
 ![Example Image](images/img2.png)
 
-```sh
+
 ############# NOTE: I have alredy created docker image from Dockerfile present in this repo you can simply pull image from my public repo and run it. #########
-docker pull docker007786/atc:myapp<br>
-docker run -itd --name=myapp -p 8080:80 docker007786/atc:myapp<br>
+```sh
+docker pull docker007786/atc:myapp
+docker run -itd --name=myapp -p 8080:80 docker007786/atc:myapp
 curl http://localhost:8080/
 ```
 ![Example Image](images/img7.png)
  
 
 
-```sh
+
 **==================== Step 2 Create an EKS Cluster with a Node Pool in AWS Using Terraform  .===================**
 
 **Note:** Before running the Terraform scripts, you need to export your AWS Access Key and Secret Access Key.  
 
 ### 1. Navigate to the Terraform Directory, Initialize, and Validate the Terraform Files  
+```sh
 cd /atc/terraform
 terraform init
 terraform validate
+```
 
 
 # 2. Terraform commands to plan and apply the configuration:
+```sh
 terraform plan
 terraform apply
 ```
 ![Example Image](images/img5.png)
 
-```sh
+
 # 3.Expected Output: 
 An EKS cluster along with node-pool attached is ctreated in us-east-2 region aws
-```
 ![Example Image](images/img8.png)
 
-```sh
+
 **================= Step 3 Deploy Sample web application on eks cluster.=================**<br>
 
 # Fetch aws credentials
-atc/kube-deployment-file
+```sh
+cd atc/kube-deployment-file
 aws eks --region us-east-2 update-kubeconfig --name my-eks-cluster
+```
 
 
 #  check aws cluster in kubeconfig
+```sh
 kubectl config get-clusters | grep aws
+```
 
 # create deployment and service 
+```sh
 kubectl apply -f myapp-deployment.yml myapp-service.yml
+```
 
 # access the servcie using port forward 
+```sh
 kubectl port-forward service/myapp-service 8080:80
 ```
 ![EKS Cluster](https://raw.githubusercontent.com/wasimalii/atc/images/img8.png)
