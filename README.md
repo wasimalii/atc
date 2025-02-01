@@ -53,7 +53,7 @@ curl http://localhost:8080/
 ![Example Image](images/img7.png)
  
 ---
-
+<!-- Adding extra space -->
 
 # Step 2 Create an EKS Cluster with a Node Pool in AWS Using Terraform.
 
@@ -88,6 +88,8 @@ An EKS cluster along with node-pool attached is ctreated in us-east-2 region aws
 ![Example Image](images/img8.png)
 
 ---
+<!-- Adding extra space -->
+
 
 # Step 3 Deploy Sample web application on eks cluster.
 
