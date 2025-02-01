@@ -19,7 +19,7 @@ Follow these steps to create AWS Access and Secret Access Keys:
 
 
 
-# === Step 1 Create Docker image For sample web application.===
+# Step 1 Create Docker image For sample web application.
 
 
 # a. Clone the repo to you local system
@@ -55,7 +55,7 @@ curl http://localhost:8080/
 
 
 
-# === Step 2 Create an EKS Cluster with a Node Pool in AWS Using Terraform.===
+# Step 2 Create an EKS Cluster with a Node Pool in AWS Using Terraform.
 
 **Note:** Before running the Terraform scripts, you need to export your AWS Access Key and Secret Access Key.  
 ### Configure AWS Credentials for Terraform  
@@ -88,7 +88,7 @@ An EKS cluster along with node-pool attached is ctreated in us-east-2 region aws
 ![Example Image](images/img8.png)
 
 
-# === Step 3 Deploy Sample web application on eks cluster.===
+# Step 3 Deploy Sample web application on eks cluster.
 
 ### Fetch aws credentials
 ```sh
