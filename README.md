@@ -17,27 +17,19 @@ Follow these steps to create AWS Access and Secret Access Keys:
 4. Navigate to the **Access Keys** section.  
 5. Click **"Create New Access Key"** to generate a new set of keys.  
 
-### Configure AWS Credentials for Terraform  
-
-Use these keys to authenticate Terraform with AWS by setting them in your environment variables:  
-
-```sh
-export AWS_ACCESS_KEY_ID="your-access-key"
-export AWS_SECRET_ACCESS_KEY="your-secret-key"
-```
 
 
-#================= Step 1 Create Docker image For sample web application.======================
+# ================= Step 1 Create Docker image For sample web application.======================
 
 ###### Create Docker Image #####
 
-# 1. Clone the repo to you local system
+# a. Clone the repo to you local system
 ```sh
 git clone https://github.com/wasimalii/atc.git
 cd atc/my-webapp
 ```
 
-# 2. Run Docker build to build the sample web application
+# b. Run Docker build to build the sample web application
 ```sh
 docker buildx build --platform linux/amd64,linux/arm64 -t <imag-tag> .    # Note: I am using macOS, so I include the platform flag to ensure that my image runs on both platforms.
 Or docker build -t <image-tag> . # To simply build image irespective of platform
@@ -45,7 +37,7 @@ Or docker build -t <image-tag> . # To simply build image irespective of platform
 ![Example Image](images/img1.png)
 
 
-# 3. To run sample web application locally
+# c. To run sample web application locally
 ```sh 
 docker run -itd --name=myapp -p 8080:80 myapp
  curl http://localhost:8080/  # you will see the nginx page
@@ -53,7 +45,7 @@ docker run -itd --name=myapp -p 8080:80 myapp
 ![Example Image](images/img2.png)
 
 
-############# NOTE: I have alredy created docker image from Dockerfile present in this repo you can simply pull image from my public repo and run it. #########
+## NOTE: I have alredy created docker image from Dockerfile present in this repo you can simply pull image from my public repo and run it. #########
 ```sh
 docker pull docker007786/atc:myapp
 docker run -itd --name=myapp -p 8080:80 docker007786/atc:myapp
@@ -64,9 +56,17 @@ curl http://localhost:8080/
 
 
 
-**==================== Step 2 Create an EKS Cluster with a Node Pool in AWS Using Terraform  .===================**
+# ==================== Step 2 Create an EKS Cluster with a Node Pool in AWS Using Terraform  .===================**
 
 **Note:** Before running the Terraform scripts, you need to export your AWS Access Key and Secret Access Key.  
+### Configure AWS Credentials for Terraform  
+
+Use these keys to authenticate Terraform with AWS by setting them in your environment variables:  
+
+```sh
+export AWS_ACCESS_KEY_ID="your-access-key"
+export AWS_SECRET_ACCESS_KEY="your-secret-key"
+```
 
 ### 1. Navigate to the Terraform Directory, Initialize, and Validate the Terraform Files  
 ```sh
@@ -76,7 +76,7 @@ terraform validate
 ```
 
 
-# 2. Terraform commands to plan and apply the configuration:
+### 2. Terraform commands to plan and apply the configuration:
 ```sh
 terraform plan
 terraform apply
@@ -84,31 +84,31 @@ terraform apply
 ![Example Image](images/img5.png)
 
 
-# 3.Expected Output: 
+### 3.Expected Output: 
 An EKS cluster along with node-pool attached is ctreated in us-east-2 region aws
 ![Example Image](images/img8.png)
 
 
-**================= Step 3 Deploy Sample web application on eks cluster.=================**<br>
+# ================= Step 3 Deploy Sample web application on eks cluster.=================**<br>
 
-# Fetch aws credentials
+### Fetch aws credentials
 ```sh
 cd atc/kube-deployment-file
 aws eks --region us-east-2 update-kubeconfig --name my-eks-cluster
 ```
 
 
-#  check aws cluster in kubeconfig
+###  check aws cluster in kubeconfig
 ```sh
 kubectl config get-clusters | grep aws
 ```
 
-# create deployment and service 
+###  create deployment and service 
 ```sh
 kubectl apply -f myapp-deployment.yml myapp-service.yml
 ```
 
-# access the servcie using port forward 
+### access the servcie using port forward 
 ```sh
 kubectl port-forward service/myapp-service 8080:80
 ```
