@@ -69,7 +69,7 @@ export AWS_ACCESS_KEY_ID="your-access-key"
 export AWS_SECRET_ACCESS_KEY="your-secret-key"
 ```
 
-### 1. Navigate to the Terraform Directory, Initialize, and Validate the Terraform Files  
+### a. Navigate to the Terraform Directory, Initialize, and Validate the Terraform Files  
 ```sh
 cd /atc/terraform
 terraform init
@@ -77,7 +77,7 @@ terraform validate
 ```
 
 
-### 2. Terraform commands to plan and apply the configuration:
+### b. Terraform commands to plan and apply the configuration:
 ```sh
 terraform plan
 terraform apply
@@ -85,7 +85,7 @@ terraform apply
 ![Example Image](images/img5.png)
 
 
-### 3.Expected Output: 
+### c.Expected Output: 
 An EKS cluster along with node-pool attached is ctreated in us-east-2 region aws
 ![Example Image](images/img8.png)
 
@@ -97,24 +97,24 @@ An EKS cluster along with node-pool attached is ctreated in us-east-2 region aws
 
 # Step 3 Deploy Sample web application on eks cluster.
 
-### Fetch aws credentials
+### a. Fetch aws credentials
 ```sh
 cd atc/kube-deployment-file
 aws eks --region us-east-2 update-kubeconfig --name my-eks-cluster
 ```
 
 
-###  check aws cluster in kubeconfig
+### b. check aws cluster in kubeconfig
 ```sh
 kubectl config get-clusters | grep aws
 ```
 
-###  create deployment and service 
+### c. create deployment and service 
 ```sh
 kubectl apply -f myapp-deployment.yml myapp-service.yml
 ```
 
-### access the servcie using port forward 
+### d. access the servcie using port forward 
 ```sh
 kubectl port-forward service/myapp-service 8080:80
 ```
